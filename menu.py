@@ -4,8 +4,8 @@ import sys
 
 
 # Screen dimensions 
-WIDTH = 1000
-HEIGHT = 1000
+WIDTH = 800
+HEIGHT = 800
 
 class Menu():
     def __init__(self):
@@ -14,7 +14,7 @@ class Menu():
         
         # Set up the display
         self.screen.fill((0, 0, 0))
-        p.display.set_caption("Yassinos Game")
+        p.display.set_caption("Yassine Game")
 
         # Load the chessboard background image
         background_image = p.image.load("./chess/assets/chessboard-menu.png").convert()
@@ -22,10 +22,10 @@ class Menu():
         # Define colors
         BLACK = (0, 0, 0)
         WHITE = (255, 255, 255)
-        GRAY = (200, 200, 200)
+        GREEN = (0, 255, 0)
 
         # Define button properties
-        BUTTON_WIDTH, BUTTON_HEIGHT = 180, 70
+        BUTTON_WIDTH, BUTTON_HEIGHT = 240, 70
         BUTTON_X = WIDTH // 2 - BUTTON_WIDTH // 2
         PLAY_BUTTON = HEIGHT // 2 - BUTTON_HEIGHT // 2
 
@@ -47,21 +47,18 @@ class Menu():
             main_btn = p.draw.rect(self.screen, BLACK, (BUTTON_X, PLAY_BUTTON, BUTTON_WIDTH, BUTTON_HEIGHT))
 
             # Draw button labels
-            btn_play = font.render("Play", True, WHITE)
+            btn_play = font.render("Start Game", True, GREEN)
             btn_play_rect = btn_play.get_rect(center=(BUTTON_X + BUTTON_WIDTH // 2, PLAY_BUTTON + BUTTON_HEIGHT // 2))
             self.screen.blit(btn_play, btn_play_rect)
 
             # Draw the title
-            title_text_shadow = font.render("welcom in lichess", True, BLACK)
             title_text = font.render("Welcome in lichess", True, WHITE)
-            self.screen.blit(title_text_shadow, (WIDTH // 2 - title_text.get_width() // 2 + 2, 52))
             self.screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, 50))
 
             # Check if buttons are clicked
             mouse_pos = p.mouse.get_pos()
             if p.mouse.get_pressed()[0]:
                 if main_btn.collidepoint(mouse_pos):
-                    print("chaye5 ya baba <3 <3 ")
                     running = False  # Exit the menu loop
 
             # Update the display

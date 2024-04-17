@@ -28,7 +28,7 @@ class Main():
         self.screen = p.display.set_mode((BOARD_WIDTH + 0, BOARD_HEIGHT))
         
     def show_menu(self):
-        p.display.set_caption("Lichess game")
+        p.display.set_caption("yassine Game")
         game_state = GameState()
         board = game_state.board
         self.lastMove = None
@@ -40,14 +40,14 @@ class Main():
         # Define colors
         BLACK = (0, 0, 0)
         WHITE = (255, 255, 255)
-        GRAY = (200, 200, 200)
+        GREEN = (0, 250, 0)
 
         # Define button properties
-        BUTTON_WIDTH, BUTTON_HEIGHT = 180, 70
+        BUTTON_WIDTH, BUTTON_HEIGHT = 240, 70
         BUTTON_X = BOARD_WIDTH // 2 - BUTTON_WIDTH // 2
         BLACK_BUTTON_Y = BOARD_HEIGHT // 2 - BUTTON_HEIGHT // 2
         WHITE_BUTTON_Y = BOARD_HEIGHT // 2 + BUTTON_HEIGHT // 2 + 10
-        BUTTON_SPACING = 20
+        BUTTON_SPACING = 30
 
         # Create font object
         font = p.font.Font("./chess/assets/Merriweather-Bold.ttf", 40)
@@ -70,7 +70,7 @@ class Main():
             # Draw buttons
             black_button = p.draw.rect(self.screen, BLACK, (BUTTON_X, black_button_y, BUTTON_WIDTH, BUTTON_HEIGHT))
             white_button = p.draw.rect(self.screen, WHITE, (BUTTON_X, white_button_y, BUTTON_WIDTH, BUTTON_HEIGHT))
-            button_pvp = p.draw.rect(self.screen, p.Color('green'), (BUTTON_X, button_pvp_y, BUTTON_WIDTH, BUTTON_HEIGHT))
+            button_1vs1 = p.draw.rect(self.screen, p.Color('green'), (BUTTON_X, button_pvp_y, BUTTON_WIDTH, BUTTON_HEIGHT))
 
             # Draw buttons labels
             black_text = font.render("Black_IA", True, WHITE)
@@ -81,16 +81,13 @@ class Main():
             white_text_rect = white_text.get_rect(center=(BUTTON_X + BUTTON_WIDTH // 2, white_button_y + BUTTON_HEIGHT // 2))
             self.screen.blit(white_text, white_text_rect)
 
-            black_text_pvp = font.render("1_vs_1", True, p.Color('dim gray'))
-            black_text_rect_pvp = black_text_pvp.get_rect(center=(BUTTON_X + BUTTON_WIDTH // 2, button_pvp_y + BUTTON_HEIGHT // 2))
-            self.screen.blit(black_text_pvp, black_text_rect_pvp)
+            black_text_1vs1 = font.render("1_vs_1", True, p.Color('light grey'))
+            black_text_rect_pvp = black_text_1vs1.get_rect(center=(BUTTON_X + BUTTON_WIDTH // 2, button_pvp_y + BUTTON_HEIGHT // 2))
+            self.screen.blit(black_text_1vs1, black_text_rect_pvp)
 
             # Draw the title
-            title_text_shadow = font.render("Play multiplayer", True, BLACK)
-            title_text = font.render("Play 1 vs 1 ", True, WHITE)
+            title_text = font.render("Play lichess ", True, WHITE)
             title_text_rect = title_text.get_rect(center=(BOARD_WIDTH // 2, 50))
-            title_text_shadow_rect = title_text_shadow.get_rect(center=(BOARD_WIDTH // 2 + 2, 52))
-            self.screen.blit(title_text_shadow, title_text_shadow_rect)
             self.screen.blit(title_text, title_text_rect)
 
             # Check if buttons are clicked
@@ -109,7 +106,7 @@ class Main():
                     # playerOne : True & playerTwo : False
                     self.main_game(playerOne=True, playerTwo=False)
                     
-            if button_pvp.collidepoint(mouse_pos):
+            if button_1vs1.collidepoint(mouse_pos):
                 if p.mouse.get_pressed()[0]:
                     # Button PVP clicked
                     # start the game
@@ -133,7 +130,7 @@ class Main():
         self.screen = p.display.set_mode((BOARD_WIDTH + MOVE_LOG_PANEL_WIDTH, BOARD_HEIGHT))
         self.load_images() # Only once, before the wile loop
         clock = p.time.Clock()
-        moveLogFont = p.font.SysFont("Arial", 21, False, False)
+        moveLogFont = p.font.SysFont("Arial", 15, True, False)
         game_state = GameState()
         validMoves = game_state.get_valid_moves()
         moveMade = False # flag var when move is made
@@ -165,7 +162,6 @@ class Main():
                             playerClicks.append(sqSelected)
                         if len(playerClicks) == 2 and humanTurn:
                             move = Move(playerClicks[0], playerClicks[1], game_state.board)
-                            print(move.get_chess_notation())
                             for i in range(len(validMoves)):
                                 if move == validMoves[i]:
                                     game_state.make_move(validMoves[i])
